@@ -19,6 +19,12 @@ START_TEST(test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_MJ)
 }
 END_TEST
 
+START_TEST(test_subtractIfNextCharIsSmallerThanCurrentChar_IX)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("IX"), 9);
+}
+END_TEST
+
 Suite * convert_suite(void)
 {
 	Suite *s;
@@ -33,6 +39,8 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_VI);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_MJ);
+
+	tcase_add_test(tc_convert, test_subtractIfNextCharIsSmallerThanCurrentChar_IX);
 
 	suite_add_tcase(s, tc_convert);
 

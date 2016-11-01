@@ -15,20 +15,35 @@
 
 int convertRomanNumeralStringToInt(char *numeralString);
 static int convertSingleCharToInt(char romanNumeralChar);
+static int subtractIfNextCharIsSmallerThanCurrentChar(char *numeralString, int *i);
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
-	int total = 0, singleCharConversion = 0;
+	int total = 0, convertedValue = 0;
 	int length = strlen(numeralString) - 1;
 	for (int i = length; i >= 0; i--)
 	{
-		singleCharConversion = convertSingleCharToInt(numeralString[i]);
-		if (singleCharConversion == ERROR)
+		convertedValue = subtractIfNextCharIsSmallerThanCurrentChar(numeralString, &i);
+		if (convertedValue == ERROR)
 			return ERROR;
-		total += singleCharConversion;
+		total += convertedValue;
 	}
 	return total;
  }
+
+int subtractIfNextCharIsSmallerThanCurrentChar(char *numeralString, int *i)
+{
+	if (*i == 0)
+		return convertSingleCharToInt(numeralString[*i]);
+	int currentCharValue = convertSingleCharToInt(numeralString[*i]);
+	int nextCharValue = convertSingleCharToInt(numeralString[*i - 1]);
+	if (currentCharValue > nextCharValue)
+	{
+		*i -= 1;
+		return currentCharValue - nextCharValue;
+	}
+	return currentCharValue;
+}
 
 int convertSingleCharToInt(char romanNumeralChar)
 {
