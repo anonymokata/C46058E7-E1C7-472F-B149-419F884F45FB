@@ -13,6 +13,12 @@ START_TEST(test_convertRomanNumeralStringToInt_VI)
 }
 END_TEST
 
+START_TEST(test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_MJ)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("MJ"), -1);
+}
+END_TEST
+
 Suite * convert_suite(void)
 {
 	Suite *s;
@@ -25,6 +31,8 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_convertSingleRomanNumeralCharToInt);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_VI);
+
+	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_MJ);
 
 	suite_add_tcase(s, tc_convert);
 

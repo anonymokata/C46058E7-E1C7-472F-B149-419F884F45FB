@@ -18,16 +18,16 @@ static int convertSingleCharToInt(char romanNumeralChar);
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
-	int total = 0;
-	int length = strlen(numeralString);
-	for (unsigned i = length; i-- >0;)
+	int total = 0, singleCharConversion = 0;
+	int length = strlen(numeralString) - 1;
+	for (int i = length; i >= 0; i--)
 	{
-		if (i == 0)
-			return total + convertSingleCharToInt(numeralString[0]);
-		else
-			total += convertSingleCharToInt(numeralString[i]);
+		singleCharConversion = convertSingleCharToInt(numeralString[i]);
+		if (singleCharConversion == ERROR)
+			return ERROR;
+		total += singleCharConversion;
 	}
-	return ERROR;
+	return total;
  }
 
 int convertSingleCharToInt(char romanNumeralChar)
