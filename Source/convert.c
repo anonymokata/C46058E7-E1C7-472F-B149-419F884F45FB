@@ -18,7 +18,16 @@ int convertSingleCharToInt(char romanNumeralChar);
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
-	return 6;
+	int total = 0;
+	int length = strlen(numeralString);
+	for (unsigned i = length; i-- >0;)
+	{
+		if (i == 0)
+			return total + convertSingleCharToInt(numeralString[0]);
+		else
+			total += convertSingleCharToInt(numeralString[i]);
+	}
+	return 0;
 }
 
 int convertSingleCharToInt(char romanNumeralChar)

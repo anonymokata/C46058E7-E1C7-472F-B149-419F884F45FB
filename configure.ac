@@ -15,6 +15,7 @@ AC_SEARCH_LIBS([timer_create], [rt])
 AC_SEARCH_LIBS([pthread_create], [pthread])
 
 AC_PROG_CC
+AC_PROG_CC_STDC
 
 AC_PROG_LIBTOOL
 
