@@ -14,7 +14,7 @@
 #define ERROR -1
 
 int convertRomanNumeralStringToInt(char *numeralString);
-int convertSingleCharToInt(char romanNumeralChar);
+static int convertSingleCharToInt(char romanNumeralChar);
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
@@ -27,8 +27,8 @@ int convertRomanNumeralStringToInt(char *numeralString)
 		else
 			total += convertSingleCharToInt(numeralString[i]);
 	}
-	return 0;
-}
+	return ERROR;
+ }
 
 int convertSingleCharToInt(char romanNumeralChar)
 {

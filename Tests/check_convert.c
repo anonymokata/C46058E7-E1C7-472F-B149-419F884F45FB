@@ -3,7 +3,7 @@
 
 START_TEST(test_convertSingleRomanNumeralCharToInt)
 {
-	ck_assert_int_eq(convertSingleCharToInt('I'), 1);
+	ck_assert_int_eq(convertRomanNumeralStringToInt("I"), 1);
 }
 END_TEST
 
