@@ -13,7 +13,13 @@
 
 #define ERROR -1
 
+int convertRomanNumeralStringToInt(char *numeralString);
 int convertSingleCharToInt(char romanNumeralChar);
+
+int convertRomanNumeralStringToInt(char *numeralString)
+{
+	return 6;
+}
 
 int convertSingleCharToInt(char romanNumeralChar)
 {
