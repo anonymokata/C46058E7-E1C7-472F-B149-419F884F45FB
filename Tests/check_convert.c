@@ -63,10 +63,11 @@ START_TEST(test_convertRomanNumeralString_dealsWithNumeralStringGreaterThan_3999
 }
 END_TEST
 
-START_TEST(test_convertIntToRomanNumeralString)
+START_TEST(test_convertIntToRomanNumeralString_MMMCMXCIX)
 {
-
-	ck_assert_int_eq(convertIntToRomanNumeralString(3999, "MMMCMXCIX"), "MMMCMXCIX");
+	char *numeralString = malloc(9 * sizeof(char));
+	ck_assert_str_eq(convertIntToRomanNumeralString(3999, numeralString), "MMMCMXCIX");
+	free(numeralString);
 }
 END_TEST
 
@@ -98,7 +99,7 @@ Suite * convert_suite(void)
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithNumeralStringGreaterThan_3999);
 
-	tcase_add_test(tc_convert, test_convertIntToRomanNumeralString);
+	tcase_add_test(tc_convert, test_convertIntToRomanNumeralString_MMMCMXCIX);
 
 	suite_add_tcase(s, tc_convert);
 

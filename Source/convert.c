@@ -4,11 +4,17 @@
 
 //define all Roman Numeral char values
 #define I  1
+#define IV 4
 #define V  5
+#define IX 9
 #define X  10
+#define XL 40
 #define L  50
+#define XC 90
 #define C  100
+#define CD 400
 #define D  500
+#define CM 900
 #define M  1000
 
 #define ERROR -1
@@ -20,8 +26,9 @@ static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralSt
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
 static bool violatesMaxFrequencyRules(int currentValue, int nextValue);
-int addFrequency(int val, int count);
+static int addFrequency(int val, int count);
 static void resetFrequencies();
+void * convertIntToRomanNumeralString(int intToConvert, char *numeralString);
 
 #define FREQUENCIES_LENGTH 13
 int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
@@ -30,6 +37,9 @@ int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
 const int maximumAllowableFrequency[FREQUENCIES_LENGTH] = {MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM};
 const int frequencyMap[FREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
 bool subtractionFlag = false;
+
+const int allNumeralValues[13] = {M, CM, D, CD, C, XC, L, XL, X, IX, V, IV, I};
+const char *allNumerals[14] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
@@ -151,7 +161,16 @@ int convertSingleCharToInt(char romanNumeralChar)
 	return ERROR;
 }
 
-char * convertIntToRomanNumeralString(int intToConvert, char *numeralString)
+void * convertIntToRomanNumeralString(int intToConvert, char *numeralString)
 {
-	return numeralString;
+	int index = 0;
+	while (intToConvert > 0)
+	{
+		while (intToConvert >= allNumeralValues[index])
+		{
+			strcat(numeralString, allNumerals[index]);
+			intToConvert -= allNumeralValues[index];
+		}
+		index++;
+	}
 }
