@@ -16,16 +16,13 @@
 int convertRomanNumeralStringToInt(char *numeralString);
 static int convertSingleCharToInt(char romanNumeralChar);
 static int getNextConvertedValue(char *numeralString, int *i);
-static int calculateResult(int currentCharValue, int nextCharValue, int *i);
 static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i);
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
-static bool resultDoesNotViolateFrequencyConstraints(int convertedValue);
 static bool violatesMaxFrequencyRules(int currentValue, int nextValue);
 int addFrequency(int val, int count);
 static void resetFrequencies();
 
-static int lastConvertedValue;
 #define FREQUENCIES_LENGTH 13
 int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
 #define MAX_FREQ_IXC 3
@@ -57,10 +54,8 @@ int getNextConvertedValue(char *numeralString, int *i)
 		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
-	int convertedValue = calculateResult(currentCharValue, nextCharValue, i);
-	if (violatesMaxFrequencyRules(currentCharValue, nextCharValue))
-		return ERROR;
-	return convertedValue;
+	int convertedValue = getNextConvertableValue(currentCharValue, nextCharValue, i);
+	return violatesMaxFrequencyRules(currentCharValue, nextCharValue) ? ERROR : convertedValue;
 }
 
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
@@ -79,12 +74,13 @@ bool badCharValue(int currentVal, int nextVal)
 	return false;
 }
 
-int calculateResult(int currentCharValue, int nextCharValue, int *i)
+int getNextConvertableValue(int currentCharValue, int nextCharValue, int *i)
 {
 	if (currentCharValue > nextCharValue)
 	{
 		if (!goodSubtractionPair(currentCharValue, nextCharValue))
 			return ERROR;
+		subtractionFlag = true;
 		*i -= 1;
 		return currentCharValue - nextCharValue;
 	}
@@ -97,10 +93,7 @@ bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 		{
 			int firstDividedBySecond = currentCharValue / nextCharValue;
 			if (firstDividedBySecond == 5 || firstDividedBySecond == 10)
-				{
-					subtractionFlag = true;
-					return true;
-				}
+				return true;
 		}
 	return false;
 }
@@ -123,7 +116,7 @@ bool violatesMaxFrequencyRules(int currentCharValue, int nextCharValue)
 
 int addFrequency(int val, int count)
 {
-	for (int i = 0; i <FREQUENCIES_LENGTH; i++)
+	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
 		if (frequencyMap[i] == val)
 			{
 				frequencies[i] += count;
