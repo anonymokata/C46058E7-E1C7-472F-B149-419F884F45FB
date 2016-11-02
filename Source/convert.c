@@ -51,7 +51,7 @@ int getNextConvertedValue(char *numeralString, int *i)
 {
 	int currentCharValue = 0, nextCharValue = 0;
 	if (!getTwoCharacterValues(&currentCharValue, &nextCharValue, numeralString, *i))
-		return currentCharValue;
+		return violatesMaxFrequencyRules(currentCharValue, nextCharValue) ? ERROR : currentCharValue;;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
 	int convertedValue = getNextConvertableValue(currentCharValue, nextCharValue, i);

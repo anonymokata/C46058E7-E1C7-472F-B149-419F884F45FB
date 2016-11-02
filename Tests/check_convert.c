@@ -51,6 +51,12 @@ START_TEST(test_convertRomanNumeralString_dealsWithIncorrectInput_MCMCIX)
 }
 END_TEST
 
+START_TEST(test_convertRomanNumeralString_dealsWithIncorrecitInput_IIII)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("IIII"), -1);
+}
+END_TEST
+
 Suite * convert_suite(void)
 {
 	Suite *s;
@@ -74,6 +80,8 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrectInput_CMIIII);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrectInput_MCMCIX);
+
+	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrecitInput_IIII);
 
 	suite_add_tcase(s, tc_convert);
 
