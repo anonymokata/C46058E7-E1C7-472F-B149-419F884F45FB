@@ -45,6 +45,7 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_VI);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_MJ);
+	tcase_add_test(tc_convert, test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_JM);
 
 	tcase_add_test(tc_convert, test_subtractIfNextCharIsSmallerThanCurrentChar_IX);
 
