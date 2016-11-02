@@ -16,12 +16,13 @@
 int convertRomanNumeralStringToInt(char *numeralString);
 static int convertSingleCharToInt(char romanNumeralChar);
 static int subtractIfNextCharIsSmallerThanCurrentChar(char *numeralString, int *i);
+static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i);
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
 	int total = 0, convertedValue = 0;
-	int length = strlen(numeralString) - 1;
-	for (int i = length; i >= 0; i--)
+	int i = strlen(numeralString) - 1;
+	for (; i >= 0; i--)
 	{
 		convertedValue = subtractIfNextCharIsSmallerThanCurrentChar(numeralString, &i);
 		if (convertedValue == ERROR)
@@ -33,16 +34,24 @@ int convertRomanNumeralStringToInt(char *numeralString)
 
 int subtractIfNextCharIsSmallerThanCurrentChar(char *numeralString, int *i)
 {
-	if (*i == 0)
-		return convertSingleCharToInt(numeralString[*i]);
-	int currentCharValue = convertSingleCharToInt(numeralString[*i]);
-	int nextCharValue = convertSingleCharToInt(numeralString[*i - 1]);
+	int currentCharValue = 0, nextCharValue = 0, j = *i;
+	if (!getTwoCharacterValues(&currentCharValue, &nextCharValue, numeralString, j))
+		return currentCharValue;
 	if (currentCharValue > nextCharValue)
 	{
 		*i -= 1;
 		return currentCharValue - nextCharValue;
 	}
 	return currentCharValue;
+}
+
+bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
+{
+	*currentVal = convertSingleCharToInt(numeralString[i]);
+	if (i == 0)
+		return false;
+	*nextVal = convertSingleCharToInt(numeralString[i - 1]);
+	return true;
 }
 
 int convertSingleCharToInt(char romanNumeralChar)
