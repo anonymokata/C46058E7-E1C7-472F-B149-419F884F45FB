@@ -19,6 +19,12 @@ START_TEST(test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_MJ)
 }
 END_TEST
 
+START_TEST(test_convertRomanNumeralStringToInt_Recognizes_BadCharInString_JM)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("JM"), -1);
+}
+END_TEST
+
 START_TEST(test_subtractIfNextCharIsSmallerThanCurrentChar_IX)
 {
 	ck_assert_int_eq(convertRomanNumeralStringToInt("IX"), 9);
