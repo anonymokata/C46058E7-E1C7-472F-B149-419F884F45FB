@@ -16,10 +16,11 @@
 int convertRomanNumeralStringToInt(char *numeralString);
 static int convertSingleCharToInt(char romanNumeralChar);
 static int getNextConvertedValue(char *numeralString, int *i);
-static bool goodResult(int currentCharValue, int nextCharValue, int *i, int *result);
+static int calculateResult(int currentCharValue, int nextCharValue, int *i);
 static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i);
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
+static bool resultDoesNotViolateFrequencyConstraints(int convertedValue);
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
@@ -42,9 +43,7 @@ int getNextConvertedValue(char *numeralString, int *i)
 		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
-	if (!goodResult(currentCharValue, nextCharValue, i, &result))
-		return ERROR;
-	return result;
+	return calculateResult(currentCharValue, nextCharValue, i);
 }
 
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
@@ -63,20 +62,16 @@ bool badCharValue(int currentVal, int nextVal)
 	return false;
 }
 
-bool goodResult(int currentCharValue, int nextCharValue, int *i, int *result)
+int calculateResult(int currentCharValue, int nextCharValue, int *i)
 {
 	if (currentCharValue > nextCharValue)
 	{
-		if (goodSubtractionPair(currentCharValue, nextCharValue))
-		{
-			*i -= 1;
-			*result = currentCharValue - nextCharValue;
-			return true;
-		}
-		return false;
+		if (!goodSubtractionPair(currentCharValue, nextCharValue))
+			return ERROR;
+		*i -= 1;
+		return currentCharValue - nextCharValue;
 	}
-	*result = currentCharValue;
-	return true;
+	return currentCharValue;
 }
 
 bool goodSubtractionPair(int currentCharValue, int nextCharValue)
