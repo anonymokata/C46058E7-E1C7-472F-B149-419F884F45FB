@@ -47,22 +47,6 @@ int getNextConvertedValue(char *numeralString, int *i)
 	return result;
 }
 
-bool goodResult(int currentCharValue, int nextCharValue, int *i, int *result)
-{
-	if (currentCharValue > nextCharValue)
-	{
-		if (goodSubtractionPair(currentCharValue, nextCharValue))
-		{
-			*i -= 1;
-			*result = currentCharValue - nextCharValue;
-			return true;
-		}
-		return false;
-	}
-	*result = currentCharValue;
-	return true;
-}
-
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
 {
 	*currentVal = convertSingleCharToInt(numeralString[i]);
@@ -77,6 +61,22 @@ bool badCharValue(int currentVal, int nextVal)
 	if (currentVal == ERROR || nextVal == ERROR)
 		return true;
 	return false;
+}
+
+bool goodResult(int currentCharValue, int nextCharValue, int *i, int *result)
+{
+	if (currentCharValue > nextCharValue)
+	{
+		if (goodSubtractionPair(currentCharValue, nextCharValue))
+		{
+			*i -= 1;
+			*result = currentCharValue - nextCharValue;
+			return true;
+		}
+		return false;
+	}
+	*result = currentCharValue;
+	return true;
 }
 
 bool goodSubtractionPair(int currentCharValue, int nextCharValue)
