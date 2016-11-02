@@ -25,10 +25,9 @@ static void resetFrequencies();
 
 #define FREQUENCIES_LENGTH 13
 int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
-#define MAX_FREQ_IXC 3
+#define MAX_FREQ_IXCM 3
 #define MAX_FREQ_VLD 1
-#define MAX_FREQ_M 4
-const int maximumAllowableFrequency[FREQUENCIES_LENGTH] = {MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_M};
+const int maximumAllowableFrequency[FREQUENCIES_LENGTH] = {MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM};
 const int frequencyMap[FREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
 bool subtractionFlag = false;
 
@@ -103,7 +102,7 @@ bool violatesMaxFrequencyRules(int currentCharValue, int nextCharValue)
 	int index = -1;
 	if (subtractionFlag)
 	{
-		index = addFrequency(nextCharValue, MAX_FREQ_IXC);
+		index = addFrequency(nextCharValue, MAX_FREQ_IXCM);
 		if (frequencies[index] > maximumAllowableFrequency[index])
 			return true;
 	}
