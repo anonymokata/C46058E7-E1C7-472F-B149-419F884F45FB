@@ -16,9 +16,9 @@
 int convertRomanNumeralStringToInt(char *numeralString);
 static int convertSingleCharToInt(char romanNumeralChar);
 static int getNextConvertedValue(char *numeralString, int *i);
-static int subtractIfNextCharIsSmallerThanCurrentChar(char *numeralString, int *i);
+static bool goodResult(int currentCharValue, int nextCharValue, int *i, int *result);
 static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i);
-static bool goodSubtractionPair(int pairValue);
+static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
 
 int convertRomanNumeralStringToInt(char *numeralString)
@@ -37,25 +37,30 @@ int convertRomanNumeralStringToInt(char *numeralString)
 
 int getNextConvertedValue(char *numeralString, int *i)
 {
-	int value = subtractIfNextCharIsSmallerThanCurrentChar(numeralString, i);
-	if (value == 99)
-		return ERROR;
-	return value;
-}
-
-int subtractIfNextCharIsSmallerThanCurrentChar(char *numeralString, int *i)
-{
-	int currentCharValue = 0, nextCharValue = 0;
+	int currentCharValue = 0, nextCharValue = 0, result = 0;
 	if (!getTwoCharacterValues(&currentCharValue, &nextCharValue, numeralString, *i))
 		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
+	if (!goodResult(currentCharValue, nextCharValue, i, &result))
+		return ERROR;
+	return result;
+}
+
+bool goodResult(int currentCharValue, int nextCharValue, int *i, int *result)
+{
 	if (currentCharValue > nextCharValue)
 	{
-		*i -= 1;
-		return currentCharValue - nextCharValue;
+		if (goodSubtractionPair(currentCharValue, nextCharValue))
+		{
+			*i -= 1;
+			*result = currentCharValue - nextCharValue;
+			return true;
+		}
+		return false;
 	}
-	return currentCharValue;
+	*result = currentCharValue;
+	return true;
 }
 
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
@@ -74,9 +79,9 @@ bool badCharValue(int currentVal, int nextVal)
 	return false;
 }
 
-bool goodSubtractionPair(int pairValue)
+bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 {
-	if (pairValue == 99)
+	if (currentCharValue - nextCharValue == 99)
 		return false;
 	return true;
 }
