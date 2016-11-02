@@ -63,6 +63,13 @@ START_TEST(test_convertRomanNumeralString_dealsWithNumeralStringGreaterThan_3999
 }
 END_TEST
 
+START_TEST(test_convertIntToRomanNumeralString)
+{
+
+	ck_assert_int_eq(convertIntToRomanNumeralString(3999, "MMMCMXCIX"), "MMMCMXCIX");
+}
+END_TEST
+
 Suite * convert_suite(void)
 {
 	Suite *s;
@@ -90,6 +97,8 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrecitInput_IIII);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithNumeralStringGreaterThan_3999);
+
+	tcase_add_test(tc_convert, test_convertIntToRomanNumeralString);
 
 	suite_add_tcase(s, tc_convert);
 

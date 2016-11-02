@@ -150,3 +150,8 @@ int convertSingleCharToInt(char romanNumeralChar)
 	}
 	return ERROR;
 }
+
+char * convertIntToRomanNumeralString(int intToConvert, char *numeralString)
+{
+	return numeralString;
+}
