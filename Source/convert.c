@@ -21,9 +21,20 @@ static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralSt
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
 static bool resultDoesNotViolateFrequencyConstraints(int convertedValue);
+static bool violatesMaxFrequencyRules(int convertedValue);
+static void resetFrequencies();
+
+#define CONVERTEDVALUEFREQUENCIES_LENGTH 7
+int convertedValueFrequencies[CONVERTEDVALUEFREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
+const int convertedValueIndex[CONVERTEDVALUEFREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
+#define MAX_FREQ_IXC 3
+#define MAX_FREQ_VLD 1
+#define MAX_FREQ_M 6
+int maximumAllowableFrequency[CONVERTEDVALUEFREQUENCIES_LENGTH] = {MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_M};
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
+	resetFrequencies();
 	int total = 0, convertedValue = 0;
 	int i = strlen(numeralString) - 1;
 	for (; i >= 0; i--)
@@ -43,7 +54,10 @@ int getNextConvertedValue(char *numeralString, int *i)
 		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
-	return calculateResult(currentCharValue, nextCharValue, i);
+	int convertedValue = calculateResult(currentCharValue, nextCharValue, i);
+	if (violatesMaxFrequencyRules(convertedValue))
+		return ERROR;
+	return convertedValue;
 }
 
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
@@ -83,6 +97,25 @@ bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 				return true;
 		}
 	return false;
+}
+
+bool violatesMaxFrequencyRules(int convertedValue)
+{
+	for (int i = 0; i < CONVERTEDVALUEFREQUENCIES_LENGTH; i++)
+		if (convertedValueIndex[i] == convertedValue)
+			{
+				convertedValueFrequencies[i]++;
+				if (convertedValueFrequencies[i] > maximumAllowableFrequency[i])
+					return true;
+				break;
+			}
+	return false;
+}
+
+void resetFrequencies()
+{
+	for (int i = 0; i < CONVERTEDVALUEFREQUENCIES_LENGTH; i++)
+		convertedValueFrequencies[i] = 0;
 }
 
 int convertSingleCharToInt(char romanNumeralChar)

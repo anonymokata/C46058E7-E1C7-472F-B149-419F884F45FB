@@ -37,6 +37,14 @@ START_TEST(test_convertRomanNumeralString_detectBadSubtractionPair_IC)
 }
 END_TEST
 
+
+START_TEST(test_convertRomanNumeralString_dealsWithIncorrectInput_CMIIII)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("CMIIII"), -1);
+}
+END_TEST
+
+
 Suite * convert_suite(void)
 {
 	Suite *s;
@@ -56,6 +64,8 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_subtractIfNextCharIsSmallerThanCurrentChar_IX);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_detectBadSubtractionPair_IC);
+
+	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrectInput_CMIIII);
 
 	suite_add_tcase(s, tc_convert);
 
