@@ -45,6 +45,12 @@ START_TEST(test_convertRomanNumeralString_dealsWithIncorrectInput_CMIIII)
 END_TEST
 
 
+START_TEST(test_convertRomanNumeralString_dealsWithIncorrectInput_MCMCIX)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("MCMCIX"), -1);
+}
+END_TEST
+
 Suite * convert_suite(void)
 {
 	Suite *s;
@@ -66,6 +72,8 @@ Suite * convert_suite(void)
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_detectBadSubtractionPair_IC);
 
 	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrectInput_CMIIII);
+
+	tcase_add_test(tc_convert, test_convertRomanNumeralString_dealsWithIncorrectInput_MCMCIX);
 
 	suite_add_tcase(s, tc_convert);
 

@@ -21,16 +21,19 @@ static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralSt
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
 static bool resultDoesNotViolateFrequencyConstraints(int convertedValue);
-static bool violatesMaxFrequencyRules(int convertedValue);
+static bool violatesMaxFrequencyRules(int currentValue, int nextValue);
+void addFrequencies(int currentVal, int nextVal);
 static void resetFrequencies();
 
-#define CONVERTEDVALUEFREQUENCIES_LENGTH 7
-int convertedValueFrequencies[CONVERTEDVALUEFREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
-const int convertedValueIndex[CONVERTEDVALUEFREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
+static int lastConvertedValue;
+#define FREQUENCIES_LENGTH 13
+int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
 #define MAX_FREQ_IXC 3
 #define MAX_FREQ_VLD 1
-#define MAX_FREQ_M 6
-int maximumAllowableFrequency[CONVERTEDVALUEFREQUENCIES_LENGTH] = {MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_M};
+#define MAX_FREQ_M 4
+const int maximumAllowableFrequency[FREQUENCIES_LENGTH] = {MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_M};
+const int frequencyValues[FREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
+bool subtractionFlag = false;
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
@@ -55,7 +58,7 @@ int getNextConvertedValue(char *numeralString, int *i)
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
 	int convertedValue = calculateResult(currentCharValue, nextCharValue, i);
-	if (violatesMaxFrequencyRules(convertedValue))
+	if (violatesMaxFrequencyRules(currentCharValue, nextCharValue))
 		return ERROR;
 	return convertedValue;
 }
@@ -94,28 +97,40 @@ bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 		{
 			int firstDividedBySecond = currentCharValue / nextCharValue;
 			if (firstDividedBySecond == 5 || firstDividedBySecond == 10)
-				return true;
+				{
+					subtractionFlag = true;
+					return true;
+				}
 		}
 	return false;
 }
 
-bool violatesMaxFrequencyRules(int convertedValue)
+bool violatesMaxFrequencyRules(int currentCharValue, int nextCharValue)
 {
-	for (int i = 0; i < CONVERTEDVALUEFREQUENCIES_LENGTH; i++)
-		if (convertedValueIndex[i] == convertedValue)
-			{
-				convertedValueFrequencies[i]++;
-				if (convertedValueFrequencies[i] > maximumAllowableFrequency[i])
-					return true;
-				break;
-			}
+	addFrequencies(currentCharValue, nextCharValue);
+	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
+		if (frequencies[i] > maximumAllowableFrequency[i])
+			return true;
 	return false;
+}
+
+void addFrequencies(int currentVal, int nextVal)
+{
+	int count = 1;
+	if (subtractionFlag)
+		for (int i = 0; i <FREQUENCIES_LENGTH; i++)
+			if (frequencyValues[i] == nextVal)
+				frequencies[i] += MAX_FREQ_IXC;
+	subtractionFlag = false;
+	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
+		if (frequencyValues[i] == currentVal)
+			frequencies[i]++;
 }
 
 void resetFrequencies()
 {
-	for (int i = 0; i < CONVERTEDVALUEFREQUENCIES_LENGTH; i++)
-		convertedValueFrequencies[i] = 0;
+	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
+		frequencies[i] = 0;
 }
 
 int convertSingleCharToInt(char romanNumeralChar)
