@@ -22,7 +22,7 @@ static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
 static bool resultDoesNotViolateFrequencyConstraints(int convertedValue);
 static bool violatesMaxFrequencyRules(int currentValue, int nextValue);
-void addFrequencies(int currentVal, int nextVal);
+int addFrequency(int val, int count);
 static void resetFrequencies();
 
 static int lastConvertedValue;
@@ -32,7 +32,7 @@ int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
 #define MAX_FREQ_VLD 1
 #define MAX_FREQ_M 4
 const int maximumAllowableFrequency[FREQUENCIES_LENGTH] = {MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_IXC, MAX_FREQ_VLD, MAX_FREQ_M};
-const int frequencyValues[FREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
+const int frequencyMap[FREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
 bool subtractionFlag = false;
 
 int convertRomanNumeralStringToInt(char *numeralString)
@@ -52,7 +52,7 @@ int convertRomanNumeralStringToInt(char *numeralString)
 
 int getNextConvertedValue(char *numeralString, int *i)
 {
-	int currentCharValue = 0, nextCharValue = 0, result = 0;
+	int currentCharValue = 0, nextCharValue = 0;
 	if (!getTwoCharacterValues(&currentCharValue, &nextCharValue, numeralString, *i))
 		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
@@ -107,24 +107,28 @@ bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 
 bool violatesMaxFrequencyRules(int currentCharValue, int nextCharValue)
 {
-	addFrequencies(currentCharValue, nextCharValue);
-	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
-		if (frequencies[i] > maximumAllowableFrequency[i])
+	int index = -1;
+	if (subtractionFlag)
+	{
+		index = addFrequency(nextCharValue, MAX_FREQ_IXC);
+		if (frequencies[index] > maximumAllowableFrequency[index])
 			return true;
+	}
+	subtractionFlag = false;
+	index = addFrequency(currentCharValue, MAX_FREQ_VLD);
+	if (frequencies[index] > maximumAllowableFrequency[index])
+		return true;
 	return false;
 }
 
-void addFrequencies(int currentVal, int nextVal)
+int addFrequency(int val, int count)
 {
-	int count = 1;
-	if (subtractionFlag)
-		for (int i = 0; i <FREQUENCIES_LENGTH; i++)
-			if (frequencyValues[i] == nextVal)
-				frequencies[i] += MAX_FREQ_IXC;
-	subtractionFlag = false;
-	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
-		if (frequencyValues[i] == currentVal)
-			frequencies[i]++;
+	for (int i = 0; i <FREQUENCIES_LENGTH; i++)
+		if (frequencyMap[i] == val)
+			{
+				frequencies[i] += count;
+				return i;
+			}
 }
 
 void resetFrequencies()
