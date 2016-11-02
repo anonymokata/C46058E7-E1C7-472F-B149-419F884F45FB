@@ -55,6 +55,8 @@ Suite * convert_suite(void)
 
 	tcase_add_test(tc_convert, test_subtractIfNextCharIsSmallerThanCurrentChar_IX);
 
+	tcase_add_test(tc_convert, test_convertRomanNumeralString_detectBadSubtractionPair_IC);
+
 	suite_add_tcase(s, tc_convert);
 
 	return s;

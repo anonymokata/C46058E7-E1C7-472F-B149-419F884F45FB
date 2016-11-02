@@ -81,9 +81,13 @@ bool badCharValue(int currentVal, int nextVal)
 
 bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 {
-	if (currentCharValue - nextCharValue == 99)
-		return false;
-	return true;
+	if (nextCharValue == I || nextCharValue == X || nextCharValue == C)
+		{
+			int firstDividedBySecond = currentCharValue / nextCharValue;
+			if (firstDividedBySecond == 5 || firstDividedBySecond == 10)
+				return true;
+		}
+	return false;
 }
 
 int convertSingleCharToInt(char romanNumeralChar)
