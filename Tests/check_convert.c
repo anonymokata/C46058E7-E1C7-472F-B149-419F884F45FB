@@ -31,6 +31,12 @@ START_TEST(test_subtractIfNextCharIsSmallerThanCurrentChar_IX)
 }
 END_TEST
 
+START_TEST(test_convertRomanNumeralString_detectBadSubtractionPair_IC)
+{
+	ck_assert_int_eq(convertRomanNumeralStringToInt("IC"), -1);
+}
+END_TEST
+
 Suite * convert_suite(void)
 {
 	Suite *s;
