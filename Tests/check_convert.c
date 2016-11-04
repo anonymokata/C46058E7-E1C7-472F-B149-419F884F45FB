@@ -98,6 +98,5 @@ TCase * convert_tcase(void)
 
 	tcase_add_test(tc_convert, test_convertIntToRomanNumeralString_MMMCMXCIX);
 
-
 	return tc_convert;
 }

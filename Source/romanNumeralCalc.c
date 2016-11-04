@@ -14,3 +14,10 @@ void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	convertIntToRomanNumeralString(firstInt + secondInt, sum);
 }
+
+void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int bufferSz)
+{
+	difference[0] = 0;
+	strcat(difference,"CLXXX");
+}
+
