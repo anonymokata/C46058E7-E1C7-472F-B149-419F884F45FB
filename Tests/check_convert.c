@@ -1,5 +1,7 @@
 #include "check_convert.h"
+#include "Source/convert.h"
 #include <check.h>
+#include <stdlib.h>
 
 START_TEST(test_convertSingleRomanNumeralCharToInt)
 {
@@ -71,14 +73,9 @@ START_TEST(test_convertIntToRomanNumeralString_MMMCMXCIX)
 }
 END_TEST
 
-Suite * convert_suite(void)
+TCase * convert_tcase(void)
 {
-	Suite *s;
-	TCase *tc_convert;
-
-	s = suite_create("Convert");
-
-	tc_convert = tcase_create("Core");
+	TCase *tc_convert = tcase_create("Core");
 
 	tcase_add_test(tc_convert, test_convertSingleRomanNumeralCharToInt);
 
@@ -101,7 +98,6 @@ Suite * convert_suite(void)
 
 	tcase_add_test(tc_convert, test_convertIntToRomanNumeralString_MMMCMXCIX);
 
-	suite_add_tcase(s, tc_convert);
 
-	return s;
+	return tc_convert;
 }

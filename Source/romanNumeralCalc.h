@@ -8,6 +8,6 @@
 #ifndef SOURCE_ROMANNUMERALCALC_H_
 #define SOURCE_ROMANNUMERALCALC_H_
 
-
+void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz);
 
 #endif /* SOURCE_ROMANNUMERALCALC_H_ */

@@ -28,7 +28,7 @@ static bool badCharValue(int currentVal, int nextVal);
 static bool violatesMaxFrequencyRules(int currentValue, int nextValue);
 static int addFrequency(int val, int count);
 static void resetFrequencies();
-void * convertIntToRomanNumeralString(int intToConvert, char *numeralString);
+void convertIntToRomanNumeralString(int intToConvert, char *numeralString);
 
 #define FREQUENCIES_LENGTH 13
 int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
@@ -161,9 +161,10 @@ int convertSingleCharToInt(char romanNumeralChar)
 	return ERROR;
 }
 
-void * convertIntToRomanNumeralString(int intToConvert, char *numeralString)
+void convertIntToRomanNumeralString(int intToConvert, char *numeralString)
 {
 	int index = 0;
+	numeralString[0] = 0;
 	while (intToConvert > 0)
 	{
 		while (intToConvert >= allNumeralValues[index])

@@ -9,7 +9,7 @@
 #ifndef TESTS_CHECK_CONVERT_H_
 #define TESTS_CHECK_CONVERT_H_
 
-Suite * convert_suite(void);
+TCase * convert_tcase(void);
 
 
 #endif /* TESTS_CHECK_CONVERT_H_ */

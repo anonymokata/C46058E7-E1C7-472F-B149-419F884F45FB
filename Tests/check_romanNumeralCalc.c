@@ -6,7 +6,26 @@
  */
 #include <stdlib.h>
 #include "check_convert.h"
+#include "check_addAndSub.h"
 #include <check.h>
+
+Suite *romanNumeral_suite(void)
+{
+	Suite *s;
+	TCase *tc_convert;
+	TCase *tc_addAndSub;
+
+	s = suite_create("RomanNumeral");
+
+	tc_convert = convert_tcase();
+	tc_addAndSub = addAndSub_tcase();
+
+	suite_add_tcase(s, tc_convert);
+	suite_add_tcase(s, tc_addAndSub);
+
+	return s;
+}
+
 
 int main(void)
 {
@@ -14,7 +33,7 @@ int main(void)
 	Suite *s;
 	SRunner *sr;
 
-	s = convert_suite();
+	s = romanNumeral_suite();
 	sr = srunner_create(s);
 
 	srunner_run_all(sr, CK_NORMAL);

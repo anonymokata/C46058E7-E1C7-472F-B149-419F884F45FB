@@ -3,10 +3,14 @@
 #include "convert.h"
 #include "romanNumeralCalc.h"
 
-
-
-int main(void)
+void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 {
-	return 0;
+	if ((bufferSz < sizeof(char) * 16))
+		{
+			sum = NULL;
+			return;
+		}
+	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
+	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
+	convertIntToRomanNumeralString(firstInt + secondInt, sum);
 }
-
