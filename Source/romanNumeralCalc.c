@@ -17,7 +17,13 @@ void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 
 void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int bufferSz)
 {
-	difference[0] = 0;
-	strcat(difference,"CLXXX");
+	if ((bufferSz < sizeof(char) * 16))
+		{
+			difference = NULL;
+			return;
+		}
+	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
+	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
+	convertIntToRomanNumeralString(firstInt - secondInt, difference);
 }
 
