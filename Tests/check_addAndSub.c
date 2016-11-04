@@ -19,6 +19,7 @@ END_TEST
 START_TEST(test_subRomanNumeralStrings_CXC_X)
 {
 	char *concatNumeralString[16];
+	concatNumeralString[0] = '\0';
 	romanSub("CXC", "X", concatNumeralString, sizeof(concatNumeralString));
 	ck_assert_str_eq(concatNumeralString, "CLXXX");
 }
@@ -31,5 +32,6 @@ TCase * addAndSub_tcase(void)
 	tcase_add_test(tc_addAndSub, test_addRomanNumeralStrings_IV_CMIX);
 
 	tcase_add_test(tc_addAndSub, test_subRomanNumeralStrings_CXC_X);
+
 	return tc_addAndSub;
 }
