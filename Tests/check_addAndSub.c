@@ -19,9 +19,24 @@ END_TEST
 START_TEST(test_subRomanNumeralStrings_CXC_X)
 {
 	char *concatNumeralString[16];
-	concatNumeralString[0] = '\0';
 	romanSub("CXC", "X", concatNumeralString, sizeof(concatNumeralString));
 	ck_assert_str_eq(concatNumeralString, "CLXXX");
+}
+END_TEST
+
+START_TEST(test_addRomanNumeralString_recognizesBadInput_XCC_GONE_TO_MARS)
+{
+	char concatNumeralString[16];
+	romanAdd("XCC", "GONE_TO_MARS", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert(concatNumeralString[0] == '\0');
+}
+END_TEST
+
+START_TEST(test_addRomanNumeralString_recognizesSumGreaterThan_3999)
+{
+	char concatNumeralString[16];
+	romanAdd("MM", "MM", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert(concatNumeralString[0] == '\0');
 }
 END_TEST
 
@@ -32,6 +47,10 @@ TCase * addAndSub_tcase(void)
 	tcase_add_test(tc_addAndSub, test_addRomanNumeralStrings_IV_CMIX);
 
 	tcase_add_test(tc_addAndSub, test_subRomanNumeralStrings_CXC_X);
+
+	tcase_add_test(tc_addAndSub, test_addRomanNumeralString_recognizesBadInput_XCC_GONE_TO_MARS);
+
+	tcase_add_test(tc_addAndSub, test_addRomanNumeralString_recognizesSumGreaterThan_3999);
 
 	return tc_addAndSub;
 }

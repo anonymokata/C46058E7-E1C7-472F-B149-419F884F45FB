@@ -5,6 +5,7 @@
 #include "romanNumeralCalc.h"
 
 static bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int bufferSz);
+static bool sumLessThan4000(int firstTerm, int secondTerm);
 
 void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 {
@@ -14,7 +15,8 @@ void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	if (firstInt == -1 || secondInt == -1)
 		return;
-	convertIntToRomanNumeralString(firstInt + secondInt, sum);
+	if (sumLessThan4000(firstInt, secondInt))
+		convertIntToRomanNumeralString(firstInt + secondInt, sum);
 }
 
 void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int bufferSz)
@@ -32,4 +34,11 @@ bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int buffer
 	if ((bufferSz < sizeof(char) * 16))
 		return false;
 	return true;
+}
+
+bool sumLessThan4000(int firstTerm, int secondTerm)
+{
+	if (firstTerm + secondTerm < 4000)
+		return true;
+	return false;
 }
