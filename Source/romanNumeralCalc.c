@@ -6,6 +6,7 @@
 
 static bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int bufferSz);
 static bool sumLessThan4000(int firstTerm, int secondTerm);
+static bool differenceGreaterThanZero(int firstTerm, int secondTerm);
 
 void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 {
@@ -25,7 +26,8 @@ void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int buf
 		return;
 	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
-	convertIntToRomanNumeralString(firstInt - secondInt, difference);
+	if (differenceGreaterThanZero(firstInt, secondInt))
+		convertIntToRomanNumeralString(firstInt - secondInt, difference);
 }
 
 bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int bufferSz)
@@ -39,6 +41,13 @@ bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int buffer
 bool sumLessThan4000(int firstTerm, int secondTerm)
 {
 	if (firstTerm + secondTerm < 4000)
+		return true;
+	return false;
+}
+
+bool differenceGreaterThanZero(int firstTerm, int secondTerm)
+{
+	if (firstTerm - secondTerm > 0)
 		return true;
 	return false;
 }
