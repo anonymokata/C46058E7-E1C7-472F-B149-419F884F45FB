@@ -4,38 +4,33 @@
 #include "convert.h"
 #include "romanNumeralCalc.h"
 
-static bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int bufferSz);
+static void nullString(char *returnString);
 static bool sumLessThan4000(int firstTerm, int secondTerm);
-static bool differenceGreaterThanZero(int firstTerm, int secondTerm);
+static void goodDifference(int firstTerm, int secondTerm, char *difference);
 
 void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 {
-	if(!goodInput(firstNumeral, secondNumeral, sum, bufferSz))
-		return;
+    sum[0] = 0;
+	if (bufferSz < sizeof(char) * 16)
+		return nullString(sum);
 	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	if (firstInt == -1 || secondInt == -1)
-		return;
+		return nullString(sum);
 	if (sumLessThan4000(firstInt, secondInt))
 		convertIntToRomanNumeralString(firstInt + secondInt, sum);
 }
 
 void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int bufferSz)
 {
-	if(!goodInput(firstNumeral, secondNumeral, difference, bufferSz))
-		return;
+    difference[0] = 0;
+	if(bufferSz < sizeof(char) * 16)
+		return nullString(difference);
 	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
-	if (differenceGreaterThanZero(firstInt, secondInt))
-		convertIntToRomanNumeralString(firstInt - secondInt, difference);
-}
-
-bool goodInput(char *firstTerm, char *secondTerm, char *returnString, int bufferSz)
-{
-    returnString[0] = 0;
-	if ((bufferSz < sizeof(char) * 16))
-		return false;
-	return true;
+	if (firstInt == -1 || secondInt == -1)
+		return nullString(difference);
+	goodDifference(firstInt, secondInt, difference);
 }
 
 bool sumLessThan4000(int firstTerm, int secondTerm)
@@ -45,9 +40,15 @@ bool sumLessThan4000(int firstTerm, int secondTerm)
 	return false;
 }
 
-bool differenceGreaterThanZero(int firstTerm, int secondTerm)
+void goodDifference(int firstTerm, int secondTerm, char *difference)
 {
 	if (firstTerm - secondTerm > 0)
-		return true;
-	return false;
+		convertIntToRomanNumeralString(firstTerm - secondTerm, difference);
+	else
+		nullString(difference);
+}
+
+void nullString(char *returnString)
+{
+	returnString[0] = '\0';
 }

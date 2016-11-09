@@ -164,7 +164,6 @@ int convertSingleCharToInt(char romanNumeralChar)
 void convertIntToRomanNumeralString(int intToConvert, char *numeralString)
 {
 	int index = 0;
-	numeralString[0] = 0;
 	while (intToConvert > 0)
 	{
 		while (intToConvert >= allNumeralValues[index])
