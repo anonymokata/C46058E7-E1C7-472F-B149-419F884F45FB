@@ -43,7 +43,7 @@ END_TEST
 START_TEST(test_subRomanNumeralString_recognizesDifferenceLessThan_1)
 {
 	char concatNumeralString[16];
-	romanAdd("MM", "MM", concatNumeralString, sizeof(concatNumeralString));
+	romanSub("C", "M", concatNumeralString, sizeof(concatNumeralString));
 	ck_assert(concatNumeralString[0] == '\0');
 }
 END_TEST
