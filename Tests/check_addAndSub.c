@@ -56,6 +56,14 @@ START_TEST(test_addRomanNumeralString_dealsWithLargeAddition_MCMXVI_CMXL)
 }
 END_TEST
 
+START_TEST(test_subRomanNumeralStringRecognizesBadInput_MMCM_CMD)
+{
+	char concatNumeralString[16];
+	romanSub("MMCM", "CMD", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert(concatNumeralString[0] == '\0');
+}
+END_TEST
+
 TCase * addAndSub_tcase(void)
 {
 	TCase *tc_addAndSub = tcase_create("Core");
@@ -71,6 +79,8 @@ TCase * addAndSub_tcase(void)
 	tcase_add_test(tc_addAndSub, test_subRomanNumeralString_recognizesDifferenceLessThan_1);
 
 	tcase_add_test(tc_addAndSub, test_addRomanNumeralString_dealsWithLargeAddition_MCMXVI_CMXL);
+
+	tcase_add_test(tc_addAndSub, test_subRomanNumeralStringRecognizesBadInput_MMCM_CMD);
 
 	return tc_addAndSub;
 }

@@ -25,10 +25,8 @@ static int getNextConvertedValue(char *numeralString, int *i);
 static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i);
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
-static bool violatesMaxFrequencyRules(int currentValue, int nextValue);
-static int addFrequency(int val, int count);
-static void resetFrequencies();
 void convertIntToRomanNumeralString(int intToConvert, char *numeralString);
+static bool numeralStringHasProperSyntax(char *numeralString, int convertedValue);
 
 #define FREQUENCIES_LENGTH 13
 int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
@@ -43,28 +41,26 @@ const char *allNumerals[14] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", 
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
-	resetFrequencies();
 	int total = 0, convertedValue = 0;
 	int i = strlen(numeralString) - 1;
 	for (; i >= 0; i--)
 	{
 		convertedValue = getNextConvertedValue(numeralString, &i);
-		if (convertedValue == ERROR)
-			return ERROR;
 		total += convertedValue;
+		if ((convertedValue == ERROR) || (total > 3999))
+			return ERROR;
 	}
-	return total;
+	return numeralStringHasProperSyntax(numeralString, total) ? total : ERROR;
  }
 
 int getNextConvertedValue(char *numeralString, int *i)
 {
 	int currentCharValue = 0, nextCharValue = 0;
 	if (!getTwoCharacterValues(&currentCharValue, &nextCharValue, numeralString, *i))
-		return violatesMaxFrequencyRules(currentCharValue, nextCharValue) ? ERROR : currentCharValue;;
+		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
-	int convertedValue = getNextConvertableValue(currentCharValue, nextCharValue, i);
-	return violatesMaxFrequencyRules(currentCharValue, nextCharValue) ? ERROR : convertedValue;
+	return getNextConvertableValue(currentCharValue, nextCharValue, i);
 }
 
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
@@ -107,36 +103,11 @@ bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 	return false;
 }
 
-bool violatesMaxFrequencyRules(int currentCharValue, int nextCharValue)
+bool numeralStringHasProperSyntax(char *numeralString, int convertedValue)
 {
-	int index = -1;
-	if (subtractionFlag)
-	{
-		index = addFrequency(nextCharValue, MAX_FREQ_IXCM);
-		if (frequencies[index] > maximumAllowableFrequency[index])
-			return true;
-	}
-	subtractionFlag = false;
-	index = addFrequency(currentCharValue, MAX_FREQ_VLD);
-	if (frequencies[index] > maximumAllowableFrequency[index])
-		return true;
-	return false;
-}
-
-int addFrequency(int val, int count)
-{
-	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
-		if (frequencyMap[i] == val)
-			{
-				frequencies[i] += count;
-				return i;
-			}
-}
-
-void resetFrequencies()
-{
-	for (int i = 0; i < FREQUENCIES_LENGTH; i++)
-		frequencies[i] = 0;
+	char properlyConvertedString[16] = "";
+	convertIntToRomanNumeralString(convertedValue, &properlyConvertedString);
+	return strcmp(properlyConvertedString, numeralString) == 0 ? true : false;
 }
 
 int convertSingleCharToInt(char romanNumeralChar)
