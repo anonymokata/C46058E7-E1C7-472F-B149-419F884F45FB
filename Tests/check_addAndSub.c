@@ -48,6 +48,14 @@ START_TEST(test_subRomanNumeralString_recognizesDifferenceLessThan_1)
 }
 END_TEST
 
+START_TEST(test_addRomanNumeralString_dealsWithLargeAddition_MCMXVI_CMXL)
+{
+	char concatNumeralString[16];
+	romanAdd("MCMXVI", "CMXL", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert_str_eq(concatNumeralString, "MMDCCCLVI");
+}
+END_TEST
+
 TCase * addAndSub_tcase(void)
 {
 	TCase *tc_addAndSub = tcase_create("Core");
@@ -61,6 +69,8 @@ TCase * addAndSub_tcase(void)
 	tcase_add_test(tc_addAndSub, test_addRomanNumeralString_recognizesSumGreaterThan_3999);
 
 	tcase_add_test(tc_addAndSub, test_subRomanNumeralString_recognizesDifferenceLessThan_1);
+
+	tcase_add_test(tc_addAndSub, test_addRomanNumeralString_dealsWithLargeAddition_MCMXVI_CMXL);
 
 	return tc_addAndSub;
 }
