@@ -7,8 +7,6 @@
 #define ERROR -1
 
 static bool goodInput(int firstTerm, int secondTerm, int bufferSize, char *returnString);
-static void goodDifference(int firstTerm, int secondTerm, char *difference);
-static void goodSum(int firstTerm, int secondTerm, char *sum);
 
 void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 {
@@ -16,7 +14,8 @@ void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	if (!goodInput(firstInt, secondInt, bufferSz, sum))
 		return;
-	goodSum(firstInt, secondInt, sum);
+	if (firstInt + secondInt < 4000)
+		convertIntToRomanNumeralString(firstInt + secondInt, sum);
 }
 
 void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int bufferSz)
@@ -25,7 +24,8 @@ void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int buf
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	if (!goodInput(firstInt, secondInt, bufferSz, difference))
 		return;
-	goodDifference(firstInt, secondInt, difference);
+	if (firstInt - secondInt > 0)
+		convertIntToRomanNumeralString(firstInt - secondInt, difference);
 }
 
 bool goodInput(int firstTerm, int secondTerm, int bufferSize, char *returnString)
@@ -36,17 +36,5 @@ bool goodInput(int firstTerm, int secondTerm, int bufferSize, char *returnString
 	if (firstTerm == ERROR || secondTerm == ERROR)
 		return false;
 	return true;
-}
-
-void goodSum(int firstTerm, int secondTerm, char *sum)
-{
-    if (firstTerm + secondTerm < 4000)
-        convertIntToRomanNumeralString(firstTerm + secondTerm, sum);
-}
-
-void goodDifference(int firstTerm, int secondTerm, char *difference)
-{
-	if (firstTerm - secondTerm > 0)
-		convertIntToRomanNumeralString(firstTerm - secondTerm, difference);
 }
 
