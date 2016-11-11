@@ -7,9 +7,11 @@
 #define ERROR -1
 
 static bool goodInput(int firstTerm, int secondTerm, int bufferSize, char *returnString);
+static void initializeReturnString(char * returnString);
 
 void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 {
+	initializeReturnString(sum);
 	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	if (!goodInput(firstInt, secondInt, bufferSz, sum))
@@ -20,6 +22,7 @@ void romanAdd(char *firstNumeral, char *secondNumeral, char *sum, int bufferSz)
 
 void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int bufferSz)
 {
+	initializeReturnString(difference);
 	int firstInt = convertRomanNumeralStringToInt(firstNumeral);
 	int secondInt = convertRomanNumeralStringToInt(secondNumeral);
 	if (!goodInput(firstInt, secondInt, bufferSz, difference))
@@ -30,7 +33,6 @@ void romanSub(char *firstNumeral, char *secondNumeral, char *difference, int buf
 
 bool goodInput(int firstTerm, int secondTerm, int bufferSize, char *returnString)
 {
-	returnString[0] = 0;
 	if (bufferSize < sizeof(char) * 16)
 		return false;
 	if (firstTerm == ERROR || secondTerm == ERROR)
@@ -38,3 +40,7 @@ bool goodInput(int firstTerm, int secondTerm, int bufferSize, char *returnString
 	return true;
 }
 
+static void initializeReturnString(char * returnString)
+{
+	returnString[0] = '\0';
+}
