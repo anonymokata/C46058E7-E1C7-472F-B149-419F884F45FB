@@ -64,11 +64,28 @@ START_TEST(test_subRomanNumeralStringRecognizesBadInput_MMCM_CMD)
 }
 END_TEST
 
-START_TEST(test_addRomanNumeralStrings_MMMCMXCVIII_I)
+START_TEST(test_addRomanNumeralStrings_edge_cases)
 {
 	char concatNumeralString[16];
+
 	romanAdd("MMMCMXCVIII", "I", concatNumeralString, sizeof(concatNumeralString));
 	ck_assert_str_eq(concatNumeralString, "MMMCMXCIX");
+
+	romanAdd("I", "I", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert_str_eq(concatNumeralString, "II");
+
+}
+END_TEST
+
+START_TEST(test_subRomanNumeralStrings_edge_cases)
+{
+	char concatNumeralString[16];
+
+	romanSub("II", "I", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert_str_eq(concatNumeralString, "I");
+
+	romanSub("MMMCMXCIX", "MMMCMXCVIII", concatNumeralString, sizeof(concatNumeralString));
+	ck_assert_str_eq(concatNumeralString, "I");
 }
 END_TEST
 
@@ -90,7 +107,9 @@ TCase * addAndSub_tcase(void)
 
 	tcase_add_test(tc_addAndSub, test_subRomanNumeralStringRecognizesBadInput_MMCM_CMD);
 
-	tcase_add_test(tc_addAndSub, test_addRomanNumeralStrings_MMMCMXCVIII_I);
+	tcase_add_test(tc_addAndSub, test_addRomanNumeralStrings_edge_cases);
+
+	tcase_add_test(tc_addAndSub, test_subRomanNumeralStrings_edge_cases);
 
 	return tc_addAndSub;
 }
