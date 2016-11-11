@@ -52,7 +52,7 @@ int getNextConvertedValue(char *numeralString, int *i)
 		return currentCharValue;
 	if (badCharValue(currentCharValue, nextCharValue))
 		return ERROR;
-	return getNextConvertableValue(currentCharValue, nextCharValue, i);
+	return getNextCharValOrSubtractionPairVal(currentCharValue, nextCharValue, i);
 }
 
 bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i)
@@ -71,7 +71,7 @@ bool badCharValue(int currentVal, int nextVal)
 	return false;
 }
 
-int getNextConvertableValue(int currentCharValue, int nextCharValue, int *i)
+int getNextCharValOrSubtractionPairVal(int currentCharValue, int nextCharValue, int *i)
 {
 	if (currentCharValue > nextCharValue)
 	{
@@ -94,13 +94,6 @@ bool goodSubtractionPair(int currentCharValue, int nextCharValue)
 	return false;
 }
 
-bool numeralStringHasProperSyntax(char *numeralString, int convertedValue)
-{
-	char properlyConvertedString[16] = "";
-	convertIntToRomanNumeralString(convertedValue, &properlyConvertedString);
-	return strcmp(properlyConvertedString, numeralString) == 0 ? true : false;
-}
-
 int convertSingleCharToInt(char romanNumeralChar)
 {
 	switch (romanNumeralChar)
@@ -121,6 +114,13 @@ int convertSingleCharToInt(char romanNumeralChar)
 			return M;
 	}
 	return ERROR;
+}
+
+bool numeralStringHasProperSyntax(char *numeralString, int convertedValue)
+{
+	char properlyConvertedString[16] = "";
+	convertIntToRomanNumeralString(convertedValue, &properlyConvertedString);
+	return strcmp(properlyConvertedString, numeralString) == 0 ? true : false;
 }
 
 void convertIntToRomanNumeralString(int intToConvert, char *numeralString)
