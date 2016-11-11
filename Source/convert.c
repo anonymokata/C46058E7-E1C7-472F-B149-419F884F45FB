@@ -28,14 +28,6 @@ static bool badCharValue(int currentVal, int nextVal);
 void convertIntToRomanNumeralString(int intToConvert, char *numeralString);
 static bool numeralStringHasProperSyntax(char *numeralString, int convertedValue);
 
-#define FREQUENCIES_LENGTH 13
-int frequencies[FREQUENCIES_LENGTH] = {0, 0, 0, 0, 0, 0, 0};
-#define MAX_FREQ_IXCM 3
-#define MAX_FREQ_VLD 1
-const int maximumAllowableFrequency[FREQUENCIES_LENGTH] = {MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM, MAX_FREQ_VLD, MAX_FREQ_IXCM};
-const int frequencyMap[FREQUENCIES_LENGTH] = {I, V, X, L, C, D, M};
-bool subtractionFlag = false;
-
 const int allNumeralValues[13] = {M, CM, D, CD, C, XC, L, XL, X, IX, V, IV, I};
 const char *allNumerals[14] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
@@ -85,7 +77,6 @@ int getNextConvertableValue(int currentCharValue, int nextCharValue, int *i)
 	{
 		if (!goodSubtractionPair(currentCharValue, nextCharValue))
 			return ERROR;
-		subtractionFlag = true;
 		*i -= 1;
 		return currentCharValue - nextCharValue;
 	}
