@@ -1,11 +1,12 @@
 TGT_NAME    =    romanNumeralCalc
-TGT_SRC     =    ../$(TGT_NAME).c
+TGT_FOLDER  =    ../source
+TGT_SRC     =    $(TGT_FOLDER)/$(TGT_NAME).c
 
 OPT         =    -O2 -fprofile-arcs -ftest-coverage
 ERR         =    -Wall
 INC_PATH    =    -I. -I..
-LIB_PATH    =    -L..
-LD_PATH     =     ..
+LIB_PATH    =    -L$(TGT_FOLDER)
+LD_PATH     =    $(TGT_FOLDER)
 
 #---------------------------------------------------------
 CC           =     gcc

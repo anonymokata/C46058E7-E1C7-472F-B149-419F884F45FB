@@ -31,10 +31,11 @@ This library's primary focus is to provide the user with 2 portable functions, n
 #Installation  
 \# download from the github repository, install in preferred dir  
 directory structure:  
-|RomanNumeralCalc2ndTry-master
+|RomanNumeralCalc2ndTry-master  
 ---|Makefile  
 ---|README.md  
 ---|source  
+------|Makefile  
 ------|convert.c  
 ------|convert.h  
 ------|romanNumeralCalc.c  
