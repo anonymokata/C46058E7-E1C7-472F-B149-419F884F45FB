@@ -25,11 +25,12 @@ static int getNextConvertedValue(char *numeralString, int *i);
 static bool getTwoCharacterValues(int *currentVal, int *nextVal, char *numeralString, int i);
 static bool goodSubtractionPair(int currentCharValue, int nextCharValue);
 static bool badCharValue(int currentVal, int nextVal);
+static int getNextCharValOrSubtractionPairVal(int currentCharValue, int nextCharValue, int *i);
 void convertIntToRomanNumeralString(int intToConvert, char *numeralString);
 static bool numeralStringHasProperSyntax(char *numeralString, int convertedValue);
 
 const int allNumeralValues[13] = {M, CM, D, CD, C, XC, L, XL, X, IX, V, IV, I};
-const char *allNumerals[14] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+const char *allNumerals[13] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
 int convertRomanNumeralStringToInt(char *numeralString)
 {
@@ -119,7 +120,7 @@ int convertSingleCharToInt(char romanNumeralChar)
 bool numeralStringHasProperSyntax(char *numeralString, int convertedValue)
 {
 	char properlyConvertedString[16] = "";
-	convertIntToRomanNumeralString(convertedValue, &properlyConvertedString);
+	convertIntToRomanNumeralString(convertedValue, properlyConvertedString);
 	return strcmp(properlyConvertedString, numeralString) == 0 ? true : false;
 }
 

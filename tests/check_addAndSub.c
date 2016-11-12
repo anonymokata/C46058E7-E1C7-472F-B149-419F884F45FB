@@ -6,11 +6,11 @@
  */
 #include <check.h>
 #include "check_addAndSub.h"
-#include "Source/romanNumeralCalc.h"
+#include "source/romanNumeralCalc.h"
 
 START_TEST(test_addRomanNumeralStrings_IV_CMIX)
 {
-	char *concatNumeralString[16];
+	char concatNumeralString[16];
 	romanAdd("IV", "CMIX", concatNumeralString, sizeof(concatNumeralString));
 	ck_assert_str_eq(concatNumeralString, "CMXIII");
 }
@@ -18,7 +18,7 @@ END_TEST
 
 START_TEST(test_subRomanNumeralStrings_CXC_X)
 {
-	char *concatNumeralString[16];
+	char concatNumeralString[16];
 	romanSub("CXC", "X", concatNumeralString, sizeof(concatNumeralString));
 	ck_assert_str_eq(concatNumeralString, "CLXXX");
 }

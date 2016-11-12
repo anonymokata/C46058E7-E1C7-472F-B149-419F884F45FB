@@ -29,15 +29,26 @@ This library's primary focus is to provide the user with 2 portable functions, n
         sub sets difference to the empty string if the difference is zero or negative
 
 #Installation  
-\# download from the github repository, navigate to the folder containing the source files  
-\# from the command line:  
-$ libtoolize --force  
-$ aclocal  
-$ autoheader  
-$ automake --force-missing --add-missing  
-$ autoconf  
-$ ./configure  
-$ make check
+\# download from the github repository, install in preferred dir  
+directory structure:  
+|RomanNumeralCalc2ndTry-master
+---|Makefile  
+---|README.md  
+---|source  
+------|convert.c  
+------|convert.h  
+------|romanNumeralCalc.c  
+------|romanNumeralCalc.h  
+---|tests  
+------|Makefile  
+------|check_convert.c  
+------|check_convert.h  
+------|check_addAndSub.c  
+------|check_addAndSub.h  
+------|check_romanNumeralCalc.c  
+------|check_romanNumeralCalc.h  
+to build all objects and run all tests from command line:  
+../RomanNumeralCalc2ndTry-master$ make check  
 
 #Example:
 

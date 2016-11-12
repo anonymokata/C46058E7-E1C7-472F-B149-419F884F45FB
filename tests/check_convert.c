@@ -1,5 +1,5 @@
 #include "check_convert.h"
-#include "Source/convert.h"
+#include "source/convert.h"
 #include <check.h>
 #include <stdlib.h>
 
@@ -67,8 +67,9 @@ END_TEST
 
 START_TEST(test_convertIntToRomanNumeralString_MMMCMXCIX)
 {
-	char *numeralString = malloc(9 * sizeof(char));
-	ck_assert_str_eq(convertIntToRomanNumeralString(3999, numeralString), "MMMCMXCIX");
+	char *numeralString = malloc(16 * sizeof(char));
+	convertIntToRomanNumeralString(3999, numeralString);
+	ck_assert_str_eq(numeralString, "MMMCMXCIX");
 	free(numeralString);
 }
 END_TEST
